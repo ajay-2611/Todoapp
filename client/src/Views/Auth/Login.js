@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Styles from './Auth.module.css';
 
-const API_BASE_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:8000/api';
+const API_BASE_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:8000';
 
 export function Login() {
     const [email, setEmail] = useState('');
@@ -12,13 +12,13 @@ export function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleLogin = async(e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/login`, {
+            const response = await axios.post(`${API_BASE_URL}/api/login`, {
                 email,
                 password
             });
@@ -30,50 +30,59 @@ export function Login() {
             // Navigate to todos page
             navigate('/');
         } catch (error) {
-            setError(error.response?.data?.message || 'Login failed');
+            setError((error.response && error.response.data && error.response.data.message) || 'Login failed');
         } finally {
             setLoading(false);
         }
     };
 
-    return (
-        <div className={Styles.authContainer}>
-                <div className={Styles.authCard}>
-                <h2>Login</h2>
-                <form onSubmit={handleLogin}>
-                    <div className={Styles.inputGroup}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={Styles.inputGroup}>
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    {error && <div className={Styles.error}>{error}</div>}
-                    <button type="submit" disabled={loading}>
-                        {loading ? 'Logging in...' : 'Login'}
-                    </button>
-                </form>
-                <p>
-                    Don't have an account? 
-                    <span 
-                        className={Styles.link} 
-                        onClick={() => navigate('/register')}
-                    >
-                        Register here
-                    </span>
-                </p>
-            </div>
-        </div>
+    return ( <
+        div className = { Styles.authContainer } >
+        <
+        div className = { Styles.authCard } >
+        <
+        h2 > Login < /h2> <
+        form onSubmit = { handleLogin } >
+        <
+        div className = { Styles.inputGroup } >
+        <
+        input type = "email"
+        placeholder = "Email"
+        value = { email }
+        onChange = {
+            (e) => setEmail(e.target.value)
+        }
+        required /
+        >
+        <
+        /div> <
+        div className = { Styles.inputGroup } >
+        <
+        input type = "password"
+        placeholder = "Password"
+        value = { password }
+        onChange = {
+            (e) => setPassword(e.target.value)
+        }
+        required /
+        >
+        <
+        /div> {
+        error && < div className = { Styles.error } > { error } < /div>} <
+        button type = "submit"
+        disabled = { loading } > { loading ? 'Logging in...' : 'Login' } <
+        /button> < /
+        form > <
+        p >
+        Don 't have an account?  <
+        span className = { Styles.link }
+        onClick = {
+            () => navigate('/register')
+        } >
+        Register here <
+        /span> < /
+        p > <
+        /div> < /
+        div >
     );
 }

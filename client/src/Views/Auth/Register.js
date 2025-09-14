@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Styles from './Auth.module.css';
 
-const API_BASE_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:8000/api';
+const API_BASE_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:8000';
 
 export function Register() {
     const [username, setUsername] = useState('');
@@ -14,7 +14,7 @@ export function Register() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    const handleRegister = async (e) => {
+    const handleRegister = async(e) => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -28,8 +28,8 @@ export function Register() {
         try {
             console.log('Attempting registration with:', { username, email, password: '***' });
             console.log('API URL:', `${API_BASE_URL}/register`);
-            
-            const response = await axios.post(`${API_BASE_URL}/register`, {
+
+            const response = await axios.post(`${API_BASE_URL}/api/register`, {
                 username,
                 email,
                 password
@@ -49,12 +49,12 @@ export function Register() {
             navigate('/');
         } catch (error) {
             console.error('Registration error:', error);
-            console.error('Error response:', error.response?.data);
-            console.error('Error status:', error.response?.status);
-            
-            if (error.response?.data?.error) {
+            console.error('Error response:', error.response && error.response.data);
+            console.error('Error status:', error.response && error.response.status);
+
+            if (error.response && error.response.data && error.response.data.error) {
                 setError(error.response.data.error);
-            } else if (error.response?.data?.message) {
+            } else if (error.response && error.response.data && error.response.data.message) {
                 setError(error.response.data.message);
             } else if (error.message) {
                 setError(error.message);
@@ -66,62 +66,74 @@ export function Register() {
         }
     };
 
-    return (
-        <div className={Styles.authContainer}>
-                <div className={Styles.authCard}>
-                <h2>Register</h2>
-                <form onSubmit={handleRegister}>
-                    <div className={Styles.inputGroup}>
-                        <input
-                            type="text"
-                            placeholder="Username"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={Styles.inputGroup}>
-                        <input
-                            type="email"
-                            placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={Styles.inputGroup}>
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    <div className={Styles.inputGroup}>
-                        <input
-                            type="password"
-                            placeholder="Confirm Password"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            required
-                        />
-                    </div>
-                    {error && <div className={Styles.error}>{error}</div>}
-                    <button type="submit" disabled={loading}>
-                        {loading ? 'Registering...' : 'Register'}
-                    </button>
-                </form>
-                <p>
-                    Already have an account? 
-                    <span 
-                        className={Styles.link} 
-                        onClick={() => navigate('/login')}
-                    >
-                        Login here
-                    </span>
-                </p>
-            </div>
-        </div>
-    );
-}
+    return ( <
+        div className = { Styles.authContainer } >
+        <
+        div className = { Styles.authCard } >
+        <
+        h2 > Register < /h2> <
+        form onSubmit = { handleRegister } >
+        <
+        div className = { Styles.inputGroup } >
+        <
+        input type = "text"
+        placeholder = "Username"
+        value = { username }
+        onChange = {
+            (e) => setUsername(e.target.value) }
+        required /
+        >
+        <
+        /div> <
+        div className = { Styles.inputGroup } >
+        <
+        input type = "email"
+        placeholder = "Email"
+        value = { email }
+        onChange = {
+            (e) => setEmail(e.target.value) }
+        required /
+        >
+        <
+        /div> <
+        div className = { Styles.inputGroup } >
+        <
+        input type = "password"
+        placeholder = "Password"
+        value = { password }
+        onChange = {
+            (e) => setPassword(e.target.value) }
+        required /
+        >
+        <
+        /div> <
+        div className = { Styles.inputGroup } >
+        <
+        input type = "password"
+        placeholder = "Confirm Password"
+        value = { confirmPassword }
+        onChange = {
+            (e) => setConfirmPassword(e.target.value) }
+        required /
+        >
+        <
+        /div> {
+            error && < div className = { Styles.error } > { error } < /div>} <
+                button type = "submit"
+            disabled = { loading } > { loading ? 'Registering...' : 'Register' } <
+                /button> <
+                /form> <
+                p >
+                Already have an account ?
+                <
+                span
+            className = { Styles.link }
+            onClick = {
+                    () => navigate('/login') } >
+                Login here <
+                /span> <
+                /p> <
+                /div> <
+                /div>
+        );
+    }

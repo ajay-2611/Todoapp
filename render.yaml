@@ -1,4 +1,15 @@
 services:
+  # Frontend Service
+  - type: web
+    name: todoapp-frontend
+    env: static
+    plan: free
+    buildCommand: cd client && npm install && npm run build
+    staticPublishPath: "./client/build"
+    envVars:
+      - key: REACT_APP_SERVER_URL
+        value: https://todoapp-api.onrender.com
+
   # Backend API Service
   - type: web
     name: todoapp-api
