@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { MyRoutes } from './Layout';
 
 
-const root = ReactDOM.createRoot(document.getElementById('newRoot'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <MyRoutes />
 );

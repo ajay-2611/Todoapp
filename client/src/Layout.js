@@ -1,6 +1,8 @@
 import { BrowserRouter, Routes, Route, Link, Outlet } from 'react-router-dom'
+import { useState, useEffect } from 'react';
 import MyURLs from './Routes/Routes';
 import Styles from './Layout.module.css';
+import Navigation from './Components/Navigation';
 
 export function MyRoutes(props) {
     return (
@@ -22,22 +24,33 @@ export function MyRoutes(props) {
 }
 
 export default function Layout(props) {
+    // Use state to track authentication status
+    const [isAuthenticated, setIsAuthenticated] = useState(!!localStorage.getItem('token'));
+    
+    // Listen for storage changes to update authentication state
+    useEffect(() => {
+        const checkAuth = () => {
+            setIsAuthenticated(!!localStorage.getItem('token'));
+        };
+        
+        // Check auth on mount
+        checkAuth();
+        
+        // Listen for storage changes (when token is added/removed)
+        window.addEventListener('storage', checkAuth);
+        
+        // Also check periodically in case token changes in same tab
+        const interval = setInterval(checkAuth, 1000);
+        
+        return () => {
+            window.removeEventListener('storage', checkAuth);
+            clearInterval(interval);
+        };
+    }, []);
+    
     return (
         <>
-            <nav className={Styles.header}>
-                <span>
-                    My TODO App
-                </span>
-                <ul className={Styles.headerLinks}>
-                    {MyURLs.map((view, index) => (
-                        <li key={view.path}>
-                            <Link to={view.path}>
-                                {view.title.toUpperCase()}
-                            </Link>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+            <Navigation isAuthenticated={isAuthenticated} />
             <div className={Styles.primaryContainer}>
                 <Outlet />
             </div>

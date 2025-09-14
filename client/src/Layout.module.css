@@ -26,7 +26,16 @@
     text-decoration: none;
 }
 
+.headerLinks a:active {
+    color: white;
+    text-decoration: none;
+}
+
 .primaryContainer{
-    padding: 4px;
-    background-color: rgb(211, 238, 247);
+    padding: 0;
+    background-color: rgb(240, 240, 240);
+    width: 100%;
+    max-width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
 }
