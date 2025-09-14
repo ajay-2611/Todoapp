@@ -11,13 +11,27 @@ app.use(express.json());
 const PORT = process.env.PORT || 8000;
 //Establish DB connection
 connectMongoDB();
-//Cors
+// CORS configuration
+const allowedOrigins = [
+    'http://localhost:3000',
+    'https://todoapp-es4w.onrender.com',
+    'https://todoapp-84c9.onrender.com'
+];
+
 app.use(cors({
-        origin: [
-            "*", "http://localhost:3000"
-        ],
-        credentials: true
-    }))
+    origin: function(origin, callback) {
+        // Allow requests with no origin (like mobile apps or curl requests)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.indexOf(origin) === -1) {
+            const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+            return callback(new Error(msg), false);
+        }
+        return callback(null, true);
+    },
+    credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
     //Routes
 app.use('/api/todo', todoRoutes)
 app.use('/api', authRoutes);
