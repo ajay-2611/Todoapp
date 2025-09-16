@@ -19,7 +19,7 @@ export function Login() {
 
         try {
             console.log('Attempting login with:', { email, password: '***' });
-            const response = await axios.post(`${process.env.REACT_APP_API_URL || API_BASE_URL}/auth/login`, {
+            const response = await axios.post(`${API_BASE_URL}/login`, {
                 email,
                 password
             }, {
@@ -51,18 +51,20 @@ export function Login() {
                 <h2>Login</h2>
                 <form onSubmit={handleLogin}>
                     <div className={Styles.inputGroup}>
+                        <label>Email</label>
                         <input
                             type="email"
-                            placeholder="Email"
+                            placeholder="Enter your email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </div>
                     <div className={Styles.inputGroup}>
+                        <label>Password</label>
                         <input
                             type="password"
-                            placeholder="Password"
+                            placeholder="Enter your password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
@@ -71,7 +73,7 @@ export function Login() {
 
                     {error && <div className={Styles.error}>{error}</div>}
 
-                    <button type="submit" disabled={loading}>
+                    <button type="submit" className={Styles.authButton} disabled={loading}>
                         {loading ? 'Logging in...' : 'Login'}
                     </button>
 

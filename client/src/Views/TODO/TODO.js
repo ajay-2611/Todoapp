@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Styles from './TODO.module.css';
 import { dummy } from './dummy';
-import axios from 'axios';
 
 const API_BASE_URL = process.env.REACT_APP_SERVER_URL || 'http://localhost:8000';
 
@@ -27,7 +27,7 @@ export function TODO(props) {
         const token = localStorage.getItem('token');
         const options = {
             method: 'GET',
-            url: `${API_BASE_URL}/api/todo`,
+            url: `${API_BASE_URL}/todo`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': token ? `Bearer ${token}` : '',
@@ -63,7 +63,7 @@ export function TODO(props) {
 
         const options = {
             method: 'POST',
-            url: `${API_BASE_URL}/api/todo`,
+            url: `${API_BASE_URL}/todo`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
@@ -103,7 +103,7 @@ export function TODO(props) {
 
         const options = {
             method: 'DELETE',
-            url: `${API_BASE_URL}/api/todo/${id}`,
+            url: `${API_BASE_URL}/todo/${id}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,
@@ -137,7 +137,7 @@ export function TODO(props) {
         const todoToUpdate = todoData.find((todo) => todo._id === id);
         const options = {
             method: 'PUT',
-            url: `${API_BASE_URL}/api/todo/${id}`,
+            url: `${API_BASE_URL}/todo/${id}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`,

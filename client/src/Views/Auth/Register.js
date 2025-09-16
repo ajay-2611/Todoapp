@@ -29,7 +29,7 @@ export function Register() {
             console.log('Attempting registration with:', { username, email, password: '***' });
             console.log('API URL:', `${API_BASE_URL}/register`);
 
-            const response = await axios.post(`${API_BASE_URL}/api/register`, {
+            const response = await axios.post(`${API_BASE_URL}/register`, {
                 username,
                 email,
                 password
@@ -66,74 +66,63 @@ export function Register() {
         }
     };
 
-    return ( <
-        div className = { Styles.authContainer } >
-        <
-        div className = { Styles.authCard } >
-        <
-        h2 > Register < /h2> <
-        form onSubmit = { handleRegister } >
-        <
-        div className = { Styles.inputGroup } >
-        <
-        input type = "text"
-        placeholder = "Username"
-        value = { username }
-        onChange = {
-            (e) => setUsername(e.target.value) }
-        required /
-        >
-        <
-        /div> <
-        div className = { Styles.inputGroup } >
-        <
-        input type = "email"
-        placeholder = "Email"
-        value = { email }
-        onChange = {
-            (e) => setEmail(e.target.value) }
-        required /
-        >
-        <
-        /div> <
-        div className = { Styles.inputGroup } >
-        <
-        input type = "password"
-        placeholder = "Password"
-        value = { password }
-        onChange = {
-            (e) => setPassword(e.target.value) }
-        required /
-        >
-        <
-        /div> <
-        div className = { Styles.inputGroup } >
-        <
-        input type = "password"
-        placeholder = "Confirm Password"
-        value = { confirmPassword }
-        onChange = {
-            (e) => setConfirmPassword(e.target.value) }
-        required /
-        >
-        <
-        /div> {
-            error && < div className = { Styles.error } > { error } < /div>} <
-                button type = "submit"
-            disabled = { loading } > { loading ? 'Registering...' : 'Register' } <
-                /button> <
-                /form> <
-                p >
-                Already have an account ?
-                <
-                span
-            className = { Styles.link }
-            onClick = {
-                    () => navigate('/login') } >
-                Login here <
-                /span> <
-                /p> <
-                /div> <
-                /div>
-        );
+    return (
+        <div className={Styles.authContainer}>
+            <div className={Styles.authCard}>
+                <h2>Register</h2>
+                <form onSubmit={handleRegister}>
+                    <div className={Styles.inputGroup}>
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            placeholder="Enter your username"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={Styles.inputGroup}>
+                        <label>Email</label>
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={Styles.inputGroup}>
+                        <label>Password</label>
+                        <input
+                            type="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className={Styles.inputGroup}>
+                        <label>Confirm Password</label>
+                        <input
+                            type="password"
+                            placeholder="Confirm your password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+                    {error && <div className={Styles.error}>{error}</div>}
+                    <button type="submit" className={Styles.authButton} disabled={loading}>
+                        {loading ? 'Creating Account...' : 'Register'}
+                    </button>
+                </form>
+                <p className={Styles.loginLink}>
+                    Already have an account?{' '}
+                    <span onClick={() => navigate('/login')}>
+                        Login here
+                    </span>
+                </p>
+            </div>
+        </div>
+    );
     }

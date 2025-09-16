@@ -19,7 +19,7 @@ const Navigation = ({ isAuthenticated }) => {
     };
 
     const handleMyTodos = () => {
-        navigate('/todos');
+        navigate('/');
     };
 
     return (
@@ -30,18 +30,15 @@ const Navigation = ({ isAuthenticated }) => {
             <div className={Styles.navRight}>
                 {isAuthenticated ? (
                     <>
-                        <button className={Styles.navButton} onClick={handleMyTodos}>
-                            MY TODOS
-                        </button>
                         <button className={Styles.navButton} onClick={handleLogout}>
                             LOGOUT
                         </button>
                     </>
                 ) : (
                     <>
-                        <button className={Styles.navButton} onClick={handleMyTodos}>
-                            MY TODOS
-                        </button>
+                        <span className={Styles.navLink} onClick={handleMyTodos}>
+                            My Todos
+                        </span>
                         <button className={Styles.navButton} onClick={handleLogin}>
                             LOGIN
                         </button>
