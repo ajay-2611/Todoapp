@@ -14,8 +14,8 @@ connectMongoDB();
 // CORS configuration
 const allowedOrigins = [
     'http://localhost:3000',
-    'https://todoapp-es4w.onrender.com',
-    'https://todoapp-84c9.onrender.com'
+    'https://todoapp-ce7s.onrender.com',
+    'https://todoapp-sne1.onrender.com'
 ];
 
 app.use(cors({
